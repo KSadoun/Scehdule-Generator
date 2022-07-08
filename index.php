@@ -1,17 +1,24 @@
 <?php
 require_once "classes/day-controller.class.php";
+require_once "classes/schedule.class.php";
 
-$day = new DayController();
+$days = new DayController();
 
 $subjects = [
+    "arabic" => 2,
     "maths" => 10,
     "science" => 8,
     "english" => 5,
     "social science" => 15,
-    "arabic" => 2,
 ];
 
-$day->addSubjectsToDays($subjects);
+$days->addSubjectsToDays($subjects);
+var_dump($subjects);
+
+// $days->getDays();
+
+// $schedule = new Schedule();
+// $schedule->getDays();
 
 ?>
 

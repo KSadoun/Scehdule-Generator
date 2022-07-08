@@ -5,27 +5,28 @@ require_once "subject.class.php";
 
 class DayController extends Day {
 
+    // public array $subjects; 
+
+    // public function __construct (array $subjects) {
+    //     $this->subjects = $subjects;
+    // }
+
+    public array $days = [];
+
     // Fill each day object with subjects required to be done
-    public function addSubjectsToDays(array $subjects) {
-
-        $days = [];
-
-        // echo (array_values($subjects)[0]);
-
-
-        // var_dump($subjects);
+    public function addSubjectsToDays(&$subjs) {
+        
         for ($i = 0; $i < $this->remainingDays; $i++) { 
-            
+        
             $day = new Day();
             $day->order = "Day number: ". $i+1;
-            //echo $day->order . "<br>";
-
             
-            foreach($subjects as $subject => $subjectHours){ 
-                echo $subject . ": " . $subjectHours . " hrs<br>"; // Subjects and their number of subjectHours
-                
+            foreach($subjs as $subject => &$subjectHours){ 
+                if($i == 0) echo $subject . ": " . $subjectHours . " hrs<br>"; // Subjects and their number of subjectHours
+                if($subjectHours == 0) continue;
+
                 // First ensure that the subject isnt finished yet and we still have time in our day
-                if((int)$subjectHours !== 0 && $day->remainingHours !== 0) { 
+                if($day->remainingHours !== 0) { 
                     
                     $subjectHoursMinusDayRemainingHours = $subjectHours - $day->remainingHours;
                     
@@ -45,23 +46,21 @@ class DayController extends Day {
                         $subjectHours = 0;
                     }
                 }
-
+                
             }
 
-            array_push($days, $day);
-
+            var_dump($day->subjects);
+            echo "<br>";
+            array_push($this->days, $day);
 
         }
 
-
-        for($i = 0; $i < count($days); $i++){
-            var_dump($days[$i]->subjects);
-            // foreach($days[$i]->subjects as $subjectName => $subjectHours){
-            //     echo "<br>" . $subjectName . ": " . $subjectHours . " hrs"
-            // }
-        }
-
+        echo "<br>";
+        var_dump($this->days[0]->subjects);
+        echo "<br>";
 
     }
+
+
 
 }
